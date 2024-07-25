@@ -34,8 +34,6 @@ import {
 } from "./styles";
 
 export function Home() {
-
-
     return (
         <ContainerTela>
             <Container>

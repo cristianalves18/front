@@ -27,9 +27,8 @@ import {
 } from "./styles";
 
 export function Login() {
-    const users = useUser()
-    console.log(users)
-
+    const { putUserData  } = useUser()
+   
     const navigate = useNavigate();
 
     const schema = yup
@@ -53,10 +52,10 @@ export function Login() {
 
     console.log(errors)
 
-    const onSubmit = async (data) => {
-        const response = await toast.promise(api.post('/session', {
-            email: data.email,
-            password: data.password,
+    const onSubmit = async (formData) => {
+        const { data } = await toast.promise(api.post('/session', {
+            email: formData.email,
+            password: formData.password,
         }),
 
             {
@@ -64,7 +63,7 @@ export function Login() {
                 success: {
                     render() {
                         setTimeout(() => {
-                            navigate('/Home');
+                            navigate('/');
 
                         }, 2000);
                         return 'Seja bem-vindo(a) 👌'
@@ -74,9 +73,8 @@ export function Login() {
             },
         );
 
-        console.log(response)
+        putUserData(data)
     }
-
 
     return (
 
@@ -101,7 +99,7 @@ export function Login() {
                     </InputContainer>
                     <Button type="submit">Entrar</Button>
                 </Form>
-                <p>Não possui conta? <Link to='/cadastro'>Clique aqui!</Link></p>
+                <p>Não possui conta? <Link to='/register'>Clique aqui!</Link></p>
             </Container2>
         </Itens>
 
